@@ -413,7 +413,7 @@ func Test_concatID(t *testing.T) {
 	}
 
 	for i, tc := range tests {
-		r := concatID(tc.inSamples)
+		r := concatID(tc.inSamples, COMPOSITE)
 		if tc.wantID != r {
 			t.Fatalf("test %d: expected: %v, got: %v", i+1, tc.wantID, r)
 		}

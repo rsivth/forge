@@ -261,7 +261,7 @@ func UniteUPs(ups []Sample, id string) Sample {
 		}
 	}
 
-	return newUP(id, concatID(ups), r.Loci)
+	return newUP(id, concatID(ups, COMPOSITE), r.Loci)
 }
 
 // HasNewAlleles returns whether UP1 has any alleles that UP2 does not have.
