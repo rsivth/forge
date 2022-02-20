@@ -117,19 +117,21 @@ func concatID(samples []Sample, mode Concat) string {
 		IDs[s.ID]++
 	}
 
+	var ids []string
+	for id := range IDs {
+		ids = append(ids, id)
+	}
+
+	sort.Slice(ids, func(i, j int) bool {
+		return ids[i] < ids[j]
+	})
+
 	cat := "Composite"
 	if mode == CONSENSUS {
 		cat = "Consensus"
 	}
 
-	r := []string{cat}
-	for id := range IDs {
-		r = append(r, id)
-	}
+	res := append([]string{cat}, ids...)
 
-	sort.Slice(r, func(i, j int) bool {
-		return r[i] < r[j]
-	})
-
-	return strings.Join(r, "::")
+	return strings.Join(res, "::")
 }
