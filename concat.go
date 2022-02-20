@@ -66,7 +66,7 @@ func concatSamples(samples []Sample, link LocusLinkage, mode Concat) Sample {
 		return sortedLocusIDs[i] < sortedLocusIDs[j]
 	})
 
-	cs := NewSample(concatID(samples), strings.Join(source, "::"))
+	cs := NewSample(concatID(samples, mode), strings.Join(source, "::"))
 	for _, locusID := range sortedLocusIDs {
 		var loci []Locus
 		for _, s := range samples {
@@ -110,14 +110,19 @@ func concatLoci(loci []Locus, mode Concat) Locus {
 }
 
 // concatID returns an id string for the concat of samples with link of mode.
-func concatID(samples []Sample) string {
+func concatID(samples []Sample, mode Concat) string {
 
 	IDs := make(map[string]int)
 	for _, s := range samples {
 		IDs[s.ID]++
 	}
 
-	var r []string
+	cat := "Composite"
+	if mode == CONSENSUS {
+		cat = "Consensus"
+	}
+
+	r := []string{cat}
 	for id := range IDs {
 		r = append(r, id)
 	}
